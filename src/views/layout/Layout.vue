@@ -1,30 +1,48 @@
 <template>
   <el-container>
     <el-header>
-      <el-col :span="4"><div class="grid-content bg-purple-light">LOGO</div></el-col>
-      <el-col :span="4" :offset="16"><div class="grid-content bg-purple-light">USER</div></el-col>
+      <el-row>
+        <el-col :span="24">
+          <el-menu default-active="5" class="el-menu-demo" mode="horizontal" @select="">
+            <el-menu-item index="1">AMC</el-menu-item>
+          </el-menu>
+        </el-col>
+      </el-row>
     </el-header>
-    <el-aside>
-      ASIDE
-    </el-aside>
-    <el-main>
-      <el-col :span="24" class="content-wrapper">
+    <el-container>
+      <el-aside>
+        <el-menu default-active="/index" class="el-menu-vertical-demo" :router="true">
+          <el-menu-item index="/index" :class="{'isActive': active}">统计</el-menu-item>
+          <el-menu-item index="/apiSerach" :class="{'isActive': !active}">API查询</el-menu-item>
+          <el-menu-item index="/iMessage" :class="{'isActive': !active}">聊天室</el-menu-item>
+        </el-menu>
+      </el-aside>
+    <el-container>
+      <el-main>
         <transition name="fade" mode="out-in">
           <router-view ref="main-control"></router-view>
         </transition>
-      </el-col>
-    </el-main>
-    <el-footer></el-footer>
+      </el-main>
+    </el-container>
+    </el-container>
   </el-container>
 </template>
 
 <script>
-export default {
-}
+  export default {
+    data: function (){
+      return {
+        active:true
+      }
+    }
+  }
 </script>
 <style>
   .el-header{
     background-color:rgba(56, 116, 214, 0.32)
+  }
+  .el-menu{
+    border-top: 1px solid #e6e6e6;
   }
   .el-row {
     margin-bottom: 20px;
