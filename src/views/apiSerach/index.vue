@@ -1,8 +1,8 @@
 <template>
   <el-container>
-    <el-header style="text-align: right; font-size: 12px">
+    <el-header style=" font-size: 12px">
       <el-row :gutter="20">
-        <el-col :span="6">
+        <el-col :span="8">
           <el-select v-model="value8" filterable placeholder="请选择">
             <el-option
               v-for="item in options"
@@ -11,6 +11,20 @@
               :value="item.id">
             </el-option>
           </el-select>
+          <el-button @click="dialogVisible = true">新项目 </el-button>
+
+          <el-dialog
+            title="录入新项目"
+            :visible.sync="dialogVisible"
+            width="30%">
+              <el-input :span="6" v-model="input" placeholder="新项目名称"></el-input>
+              <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="submitNewProject">确 定</el-button>
+               </span>
+          </el-dialog>
+
+
         </el-col>
         <el-col :span="6">
           <el-input :span="6" v-model="input" placeholder="请输入接口关键字"></el-input>
@@ -95,6 +109,7 @@
         address: '上海市普陀区金沙江路 1518 弄'
       };
       return {
+        dialogVisible: false,
         options:[],
         value8: '',
         input:'',
@@ -114,6 +129,11 @@
           }, response => {
             console.info('fail')
           })
+      },
+      submitNewProject(){
+        console.info('123');
+        this.dialogVisible = false;
+
       },
       handleEdit(index, row) {
         this.$alert('这是一段内容', '标题名称', {
