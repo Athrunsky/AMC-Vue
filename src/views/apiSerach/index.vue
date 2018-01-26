@@ -29,9 +29,10 @@
         <el-col :span="6">
           <el-input :span="6" v-model="input" placeholder="请输入接口关键字"></el-input>
         </el-col>
-        <el-button>查询</el-button>
-        <el-button type="warning">删除接口</el-button>
-        <el-button type="success">提交新接口</el-button>
+        <el-col :span="6" style="float: right;">
+          <el-button>查询</el-button>
+          <el-button type="success">提交新接口</el-button>
+        </el-col>
       </el-row>
     </el-header>
 
@@ -100,7 +101,7 @@
 </style>
 
 <script>
-  import { getProjectMenu } from '../../config/api'
+  import { ProjectMenu } from '../../config/api'
   export default {
     data() {
       const item = {
@@ -122,7 +123,7 @@
     },
     methods: {
       getProjectMenu(){
-        getProjectMenu.get()
+        ProjectMenu.get()
           .then(response => {
             this.options = response.data.array;
             console.info(response.data.array);
@@ -131,9 +132,18 @@
           })
       },
       submitNewProject(){
-        console.info('123');
-        this.dialogVisible = false;
-
+         ProjectMenu.post({name:this.input})
+           .then(response =>{
+             console.info(response);
+           this.dialogVisible = true;
+             this.$message({
+               showClose: true,
+               message: '添加成功',
+               type: 'success'
+             });
+         },response => {
+          console.info('fail')
+        })
       },
       handleEdit(index, row) {
         this.$alert('这是一段内容', '标题名称', {
